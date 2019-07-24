@@ -6,7 +6,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strings"
 	"time"
 )
 
@@ -22,10 +21,6 @@ func main() {
 		fmt.Print("Enter project path: ")
 		path, _ = reader.ReadString('\n')
 
-		//default
-		if strings.TrimSuffix(path, "\n") == "" {
-			path = "C:/Cherry/Projects/student-record-system"
-		}
 	} else {
 		path = os.Args[1]
 	}
