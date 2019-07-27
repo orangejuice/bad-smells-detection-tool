@@ -2,6 +2,7 @@ package util
 
 import (
 	"io/ioutil"
+	"log"
 	"os"
 )
 
@@ -16,10 +17,12 @@ func ScanMicroservices(path string) []os.FileInfo {
 			for _, ft := range files {
 				if ft.Name() == "src" {
 					services = append(services, f)
+					log.Println("Found microservices: ", f.Name())
 					break
 				}
 			}
 		}
 	}
+	log.Println("Found microservices number: ", len(services))
 	return services
 }

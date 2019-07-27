@@ -1,12 +1,15 @@
 package main
 
 import (
-	"./smells"
-	"./util"
 	"bufio"
 	"fmt"
+	"log"
 	"os"
+	"strings"
 	"time"
+
+	"./smells"
+	"./util"
 )
 
 func main() {
@@ -20,20 +23,26 @@ func main() {
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Print("Enter project path: ")
 		path, _ = reader.ReadString('\n')
-
+		path = strings.TrimSuffix(path, "\n")
+		log.Println("scanning", path)
 	} else {
 		path = os.Args[1]
 	}
 
-	fmt.Println("scanning for micro-services in", path)
+	fmt.Println("scanning for microservices in", path)
 	time.Sleep(1 * time.Second)
 
 	//filter, only leaves micro-services
 	services := util.ScanMicroservices(path)
 
-	fmt.Println("discovered micro-services:")
-	for _, f := range services {
-		fmt.Println("-", f.Name())
+	if len(services) > 0 {
+		fmt.Println("discovered micro-services:")
+		for _, f := range services {
+			fmt.Println("-", f.Name())
+		}
+	} else {
+		fmt.Println("sorry, no supported microservices are detected.")
+		os.Exit(1)
 	}
 
 	fmt.Println("\ndetecting API gateway")
